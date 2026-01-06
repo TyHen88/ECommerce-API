@@ -61,14 +61,19 @@ export const login = async (email: string, password: string) => {
 };
 
 export const generateToken = (userId: number, email: string, role: string): string => {
-  return jwt.sign({ userId, email, role }, env.jwtSecret, {
-    expiresIn: env.jwtExpiresIn,
-  });
+  // @ts-ignore - jsonwebtoken types have expiresIn property
+  const token = jwt.sign(
+    { userId, email, role },
+    env.jwtSecret as string,
+    { expiresIn: env.jwtExpiresIn }
+  );
+  return token;
 };
 
 export const verifyToken = (token: string): { userId: number; email: string; role: string } => {
   try {
-    return jwt.verify(token, env.jwtSecret) as { userId: number; email: string; role: string };
+    const decoded = jwt.verify(token, env.jwtSecret as string);
+    return decoded as { userId: number; email: string; role: string };
   } catch (error) {
     throw new UnauthorizedError("Invalid or expired token");
   }

@@ -3,7 +3,7 @@ import { ZodSchema, ZodError } from "zod";
 import { sendError } from "../utils/response.util";
 
 export const validate = (schema: ZodSchema) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     try {
       schema.parse({
         body: req.body,
@@ -17,7 +17,8 @@ export const validate = (schema: ZodSchema) => {
           path: err.path.join("."),
           message: err.message,
         }));
-        return sendError(res, "Validation failed", 400, JSON.stringify(errorMessages));
+        sendError(res, "Validation failed", 400, JSON.stringify(errorMessages));
+        return;
       }
       next(error);
     }
