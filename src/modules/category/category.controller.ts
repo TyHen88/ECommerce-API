@@ -3,6 +3,7 @@ import * as service from "./category.service";
 import { sendSuccess } from "../../shared/utils/response.util";
 
 export const create = async (req: Request, res: Response) => {
+
   const category = await service.createCategory(req.body);
   return sendSuccess(res, category, "Category created successfully", 201);
 };
