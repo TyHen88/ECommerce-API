@@ -14,4 +14,7 @@ export const env = {
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY || "",
   kafkaBrokers: process.env.KAFKA_BROKERS?.split(",") || ["localhost:9092"],
   kafkaClientId: process.env.KAFKA_CLIENT_ID || "ecommerce-api",
+  // Temporary: set to false to re-enable Redis/Kafka
+  disableRedis: true,
+  disableKafka: true,
 };

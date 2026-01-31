@@ -4,7 +4,15 @@ import { NotFoundError } from "../../shared/errors/app.error";
 import redisClient from "../../config/redis";
 
 jest.mock("./product.repository");
-jest.mock("../../config/redis");
+jest.mock("../../config/redis", () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+    setEx: jest.fn(),
+    del: jest.fn(),
+  },
+  isRedisAvailable: true,
+}));
 
 describe("Product Service", () => {
   beforeEach(() => {
