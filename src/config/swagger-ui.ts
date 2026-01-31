@@ -36,7 +36,7 @@ const routes: RouteDefinition[] = [
       "401": { description: "Invalid credentials" },
     },
   },
-  
+
   // Product routes
   {
     path: "/api/products",

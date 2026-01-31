@@ -12,6 +12,9 @@ import { morganFormat } from "./config/morgan";
 
 const app = express();
 
+// Trust proxy (required for correct client IP and rate limiting behind Vercel/reverse proxies)
+app.set("trust proxy", 1);
+
 // ==============================
 // Security middleware
 // ==============================

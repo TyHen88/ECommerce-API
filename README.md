@@ -240,6 +240,22 @@ Orders automatically create a Stripe payment intent. The payment intent ID is st
 | `PORT` | Server port | No (default: 3000) |
 | `NODE_ENV` | Environment (development/production) | No |
 
+## ▲ Deploy on Vercel
+
+The API is configured for [Vercel](https://vercel.com) serverless deployment:
+
+1. **Connect the repo** – Import the project from GitHub in [Vercel](https://vercel.com/new).
+2. **Environment variables** – In Project Settings → Environment Variables, add:
+   - `DATABASE_URL` – PostgreSQL connection string (e.g. [Neon](https://neon.tech), [Supabase](https://supabase.com), or [Vercel Postgres](https://vercel.com/storage/postgres))
+   - `JWT_SECRET` – Strong secret for JWT signing
+   - `REDIS_URL` – Redis URL (optional; use [Upstash](https://upstash.com) for serverless Redis)
+   - `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY` – If using payments
+   - `CORS_ORIGIN` – Allowed frontend origin (e.g. `https://your-app.vercel.app`)
+3. **Database** – Run migrations against your production DB before or after first deploy (e.g. `npx prisma migrate deploy` locally with production `DATABASE_URL`, or in a CI step).
+4. **Deploy** – Push to the connected branch; Vercel builds with `prisma generate && npm run build` and runs the Express app as a serverless function.
+
+**Notes:** Swagger is disabled in production. Health check: `GET /health`. If `prisma generate` fails on Vercel, move `prisma` from `devDependencies` to `dependencies` in `package.json`.
+
 ## 🏭 Production Deployment
 
 1. Set `NODE_ENV=production`
